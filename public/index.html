@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Your private NBA forecasting research dashboard.">
+  <title>NBA Edge Lab</title><link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.mjs"></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/" aria-label="NBA Edge Lab home"><span class="brand-icon">E</span> NBA EDGE LAB</a><span class="environment">LOCAL WORKSPACE <span class="dot"></span></span></header>
+  <main>
+    <div class="intro"><div><p class="eyebrow">YOUR DAILY NBA RESEARCH DESK</p><h1>Find the edge.<br><span>Keep the evidence.</span></h1><p class="lede">One best opportunity. A clear explanation. A record that holds up.</p></div><div class="date-panel"><p id="today"></p><span>Michigan, USA · Eastern time</span><span class="pill">v0.1 · Foundation</span></div></div>
+    <nav class="tabs" aria-label="Dashboard sections"><a href="#today-section">Today's board</a><a href="#ledger-section">Bet journal</a><a href="#research-section">Research status</a></nav>
+    <section class="board-grid" id="today-section" aria-labelledby="board-title">
+      <article class="card best"><div class="card-heading"><h2 id="board-title">Best opportunity</h2><span class="badge">AWAITING VALIDATION</span></div><div class="empty-symbol" aria-hidden="true">◎</div><h3>No recommendation available</h3><p>Live data is not connected and no model has been validated. There is no estimated edge to act on yet.</p><div class="readiness"><span>Price history</span><b>Not connected</b><span>Forecast model</span><b>Not trained</b><span>Probability interval</span><b>Not available</b></div><p class="footnote">Missing data is different from a verified “no qualifying bet” day.</p></article>
+      <article class="card shortlist"><div class="card-heading"><h2>On the shortlist</h2><span class="muted">UP TO 3</span></div><p class="section-note">Only qualifying opportunities will appear.</p><div class="placeholder-row"><span class="rank">01</span><div><h3>Waiting for a tested model</h3><p>Game winner or point spread</p></div></div><div class="placeholder-row"><span class="rank">02</span><div><h3>Evidence before a ranking</h3><p>Available price and uncertainty</p></div></div><div class="placeholder-row"><span class="rank">03</span><div><h3>No forced daily picks</h3><p>Fewer opportunities when appropriate</p></div></div><div class="schedule"><span>Morning outlook</span><b>Not scheduled</b><span>Pregame update</span><b>Not scheduled</b></div></article>
+    </section>
+    <section id="ledger-section" aria-labelledby="journal-title"><div class="section-heading"><div><p class="eyebrow">THE RECORD</p><h2 id="journal-title">Your bet journal</h2></div><button type="button" class="secondary" id="export">Export journal</button></div>
+      <p class="section-note">Stored only in this browser. Other devices do not sync yet. Export a backup before clearing browser data.</p>
+      <div class="stats"><div><span>Recorded bets</span><strong id="count">0</strong></div><div><span>Settled net profit</span><strong id="profit">—</strong></div><div><span>Settled return on stake</span><strong id="roi">—</strong></div><div><span>At one unit per bet</span><strong id="units">—</strong></div></div>
+      <div class="card"><h3>Add a placed bet</h3><p class="section-note">Record your actual accepted price. Entries are user-reported and are not verified against a model recommendation.</p>
+      <form id="bet-form"><div class="form-grid">
+        <label>Matchup<input required name="game" maxlength="120" placeholder="Away team at home team"></label>
+        <label>Your selection<input required name="selection" maxlength="120" placeholder="Selected team"></label>
+        <label>Sportsbook<select name="book"><option>FanDuel</option><option>DraftKings</option><option>BetMGM</option><option>bet365</option></select></label>
+        <label>Market<select name="market" id="market"><option>Moneyline</option><option>Spread</option></select></label>
+        <label>Accepted odds<input required name="odds" type="number" step="1" placeholder="e.g. -110"></label>
+        <label>Selected team's spread<input name="line" id="line" type="number" step="0.5" placeholder="e.g. -3.5" disabled></label>
+        <label>Stake ($)<input required name="stake" type="number" min="0.01" max="1000000" step="0.01" placeholder="Amount placed"></label>
+        <label>Time placed (Eastern)<input required name="placedAt" type="datetime-local"></label>
+      </div><div class="form-actions"><p id="form-message" role="status" aria-live="polite"></p><button type="submit">Save bet <span aria-hidden="true">↗</span></button></div></form></div>
+      <div class="table-wrap"><table><caption class="sr-only">Recorded bets and user-reported results</caption><thead><tr><th>Matchup / selection</th><th>Book / market</th><th>Accepted price</th><th>Stake</th><th>Result</th><th>Net</th></tr></thead><tbody id="bets"></tbody></table></div>
+    </section>
+    <section id="research-section" aria-labelledby="research-title"><div class="section-heading"><div><p class="eyebrow">BUILT TO BE QUESTIONED</p><h2 id="research-title">Research status</h2></div><span class="pill">Edge unproven</span></div><div class="research-grid"><article class="card"><h3>Book coverage</h3><p class="section-note">Documentation checked Oct 24, 2026. No authenticated feed tested. US coverage does not establish Michigan-specific prices.</p><dl class="coverage"><dt>FanDuel</dt><dd>Documented · untested</dd><dt>DraftKings</dt><dd>Documented · untested</dd><dt>BetMGM</dt><dd>Documented · untested</dd><dt>bet365</dt><dd>MI feed unverified</dd></dl></article><article class="card"><h3>The evaluation contract</h3><ul class="principles"><li>Train on the past. Predict the future.</li><li>Keep final test results out of model tuning.</li><li>Test the daily selection rules, not just the model.</li><li>Preserve every forecast before tipoff.</li><li>Earn a model upgrade with new evidence.</li></ul></article></div></section>
+  </main><footer><span>NBA EDGE LAB</span><span>Private research · No validated betting edge</span></footer>
+</body></html>
