@@ -1,8 +1,8 @@
 # NBA Edge Lab
 
-Private NBA forecasting research for Michigan, USA. Version 0.2 adds free-provider key setup and bounded data collectors to the responsive local dashboard and manual bet journal.
+Private NBA forecasting research for Michigan, USA. Version 0.3 adds a fixed, chronological forecasting experiment and a research report view to the local dashboard.
 
-**No trained model, authenticated provider test, automated schedule, forecast intervals, market comparison, or verified betting edge exists yet.** Provider collectors are implemented and tested with synthetic responses; real access remains untested until free accounts/keys are configured. Missing data is not a no-edge finding.
+**No validated betting edge, automated schedule, forecast interval, selected-bet return estimate or historical market-price comparison is available.** Free providers have authenticated successfully and five-season game coverage passed and a first real-data baseline is fitted. Baseline fitting requires a complete coverage audit; the dashboard reads the real private experiment report and keeps recommendations disabled. Missing data is not a no-edge finding.
 
 ## Run
 
@@ -19,7 +19,8 @@ Open http://127.0.0.1:4173 on the laptop. The interface is responsive for phone-
 ## What works
 
 - Hidden owner-only local key setup, safe readiness reporting, and bounded BALLDONTLIE / The Odds API collectors. No TheRundown archival collector is enabled.
-- One game page or one three-book NBA odds snapshot per explicit command, with normalized records, provenance, immutable-by-collector snapshot files and local rate/credit guards. No automatic jobs.
+- One game page or one three-book NBA odds snapshot per explicit command, plus a bounded/resumable historical backfill. Normalized records, provenance, private snapshot files and local rate/credit guards. No scheduled jobs.
+- Structural game coverage checks and a one-configuration logistic/score-margin experiment with fixed expanding-window comparisons. Research-only metrics appear after a verified report exists.
 
 - Responsive daily board with explicit unavailable states for best opportunity, three shortlist slots, forecast intervals, and update schedule.
 - Manual journal for moneyline/spread bets at FanDuel, DraftKings, BetMGM, and bet365. Recording a bet does not establish live feed coverage or a model recommendation.
@@ -35,15 +36,17 @@ One best qualifying NBA moneyline or spread opportunity plus up to three others,
 
 ## Build sequence
 
-1. **v0.1 — foundation:** dashboard/journal, documented feasibility, evaluation design. This commit.
-2. **v0.2 — data setup:** key helper, collectors, private snapshots, quota guards and source-rights update implemented. User must create free accounts and save keys. Authentication and actual coverage tests remain pending. No signup, paid trial, or scheduler has been created.
-3. **Forecast baseline:** ingest completed games, construct past-only team-strength/rest/margin features, establish chronological splits, and train regularized baselines. No historical ROI claim without contemporaneous prices.
+1. **v0.1 — foundation:** dashboard/journal, documented feasibility, evaluation design. Completed.
+2. **v0.2 — data setup:** key helper, collectors, private snapshots, quota guards and source-rights update implemented. Free accounts/keys are now configured; both providers authenticated and initial responses were collected. Michigan price equivalence remains unverified. No signup, paid trial, or scheduler has been created.
+3. **v0.3 — forecast baseline:** independently audit 2021–2025 regular-season history, fit the predeclared regularized baselines, and evaluate development periods. The 2025 final performance test stays unevaluated. Historical score availability uses an explicit conservative approximation; no historical ROI claim is made.
 4. **Forward research:** record morning and pregame predictions before tipoff, verify selection logic and settlement, and compare with market baselines.
 5. **Model qualification:** assess predeclared evidence requirements. Only then enable qualifying recommendations and documented intervals; support no-bet days.
 6. **Phone access:** authenticated hosting with private server-side journal storage and API secrets. Add screenshot entry later.
 
 ## Project records
 
+- [First baseline results](docs/BASELINE_RESULTS.md)
+- [Baseline experiment specification](docs/BASELINE_001.md)
 - [Free account/key walkthrough](docs/SETUP.md)
 - [User decisions](docs/DECISIONS.md)
 - [Source feasibility](docs/DATA_FEASIBILITY.md)
@@ -56,3 +59,13 @@ Credentials, raw provider responses, personal journals, trained artifacts, and s
 ## Browser QA
 
 Open a separate tab at http://127.0.0.1:4173/#qa to use isolated session-only records. The banner must say QA SESSION. Use fictional matchups, verify adding/settling/reloading, then close that test tab. Ordinary dashboard records are unaffected.
+
+## Historical research commands
+
+```sh
+npm run data:backfill
+npm run research:audit
+npm run research:baseline
+```
+
+Backfill resumes private page chains at one request per 13 seconds with a 100-new-request run bound. Audit verifies all five seasons, not just pagination. `research:baseline` registers a single real-data experiment and refuses to rerun an existing registration. It never opens final-test performance. Do not delete the registration to tune against results; create a separately justified, versioned experiment when needed. Model/source/dataset hashes and failed runs must be preserved.

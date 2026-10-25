@@ -118,10 +118,16 @@ async function showDataStatus() {
       else if (!value.lastCollection) $(element).textContent = 'Key saved locally · API access not tested yet.';
       else {
         const date = value.lastCollection.observedAt ? new Intl.DateTimeFormat('en-US',{ timeZone:'America/New_York',month:'short',day:'numeric',hour:'numeric',minute:'2-digit' }).format(new Date(value.lastCollection.observedAt)) : 'unknown time';
-        $(element).textContent = `Last collection: ${date} ET · ${value.lastCollection.records ?? 'unknown'} records. ${provider === 'balldontlie' ? 'Full-season coverage unverified.' : 'Research snapshot; Michigan prices unverified.'}`;
+        $(element).textContent = `Last collection: ${date} ET · ${value.lastCollection.records ?? 'unknown'} records in the latest snapshot. ${provider === 'balldontlie' ? 'See research audit for season coverage.' : 'Research snapshot; Michigan prices unverified.'}`;
       }
     }
     if (status.indexError) $('data-message').textContent = 'The collection history could not be read. Existing records were preserved; data readiness is unknown.';
+    if(status.oddsapi.lastCollection) $('odds-readiness').textContent='Snapshot saved · not a live stream';
+    for(const [book,label] of [['fanduel','FanDuel'],['draftkings','DraftKings'],['betmgm','BetMGM']]) {
+      const seen=status.oddsapi.lastCollection?.booksPresent?.includes(label);
+      $('coverage-'+book).textContent=seen?'Seen in latest snapshot · MI unverified':'Documented · absent from latest snapshot or untested';
+    }
+    $('model-readiness').textContent=status.model;
   } catch {
     $('games-status').textContent = 'Local data status unavailable.';
     $('odds-status').textContent = 'Local data status unavailable.';
@@ -129,3 +135,22 @@ async function showDataStatus() {
   }
 }
 showDataStatus();
+
+async function showResearch() {
+  try {
+    const response=await fetch('/api/research-status',{cache:'no-store'});
+    if(!response.ok)throw new Error('unavailable');
+    const r=await response.json();
+    if(!r.available){$('research-summary').textContent=r.statusError?'Research report could not be verified. Recommendations remain locked.':'No model report is available yet. Historical data must pass the coverage audit before fitting.';return;}
+    $('research-summary').textContent=`Fitted on season start years ${r.trainSeasons.join(', ')}; development evaluation on ${r.developmentSeasons.join(', ')}. The ${r.sealedTestSeasons.join(', ')} final performance test remains unopened. Historical score availability is a retrospective approximation.`;
+    $('training-count').textContent=r.trainingRows.toLocaleString();
+    $('development-count').textContent=r.developmentRows.toLocaleString();
+    $('margin-error').textContent=r.marginModel.mae.toFixed(2)+' pts';
+    const body=$('model-metrics');body.replaceChildren();
+    for(const [label,value] of [['Logistic baseline',r.candidate],['Fixed Elo comparator',r.eloBaseline],['Home-frequency comparator',r.homeFrequencyBaseline]]){
+      const row=document.createElement('tr');cell(row,label);cell(row,value.logLoss.toFixed(4));cell(row,value.brier.toFixed(4));cell(row,(value.accuracy*100).toFixed(1)+'%');body.append(row);
+    }
+    $('model-readiness').textContent='Development baseline fitted';
+  }catch{$('research-summary').textContent='Research status unavailable. Recommendations remain locked.';}
+}
+showResearch();

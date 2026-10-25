@@ -2,6 +2,7 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dataStatus } from './src/collection.mjs';
+import { researchStatus } from './src/research-status.mjs';
 
 // Exact routes avoid exposing repository files, credentials, or raw data.
 const routes = new Map([
@@ -12,6 +13,10 @@ const routes = new Map([
 ]);
 export function makeServer({ root, environment } = {}) {
   return createServer(async (req, res) => {
+    if (req.url === '/api/research-status' && req.method === 'GET') {
+      res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
+      return res.end(JSON.stringify(await researchStatus(root)));
+    }
     if (req.url === '/api/data-status' && req.method === 'GET') {
       const status = await dataStatus(root, environment);
       res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });

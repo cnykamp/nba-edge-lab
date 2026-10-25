@@ -1,6 +1,6 @@
 # Evaluation contract
 
-Version 0.1 is a design contract, **not a registered completed experiment**. No data, folds, tuned model, result, confidence interval, or profitable strategy exists yet. Numerical dates, trial budgets, thresholds, sample-size targets, and acceptance criteria must be recorded before the first training run after a data-availability audit. Do not select them by looking at final test results.
+This contract began in v0.1. The first registered development experiment is now fitted: see [the frozen specification](BASELINE_001.md) and [all reported baseline results](BASELINE_RESULTS.md). The final performance test remains unevaluated. No forecast interval, qualified selection policy, historical market-price comparison, or profitable strategy has been established. Record trial budgets and acceptance criteria before each experiment; do not select them by looking at final test results.
 
 ## Target and evidence
 

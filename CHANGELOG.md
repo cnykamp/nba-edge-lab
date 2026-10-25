@@ -1,5 +1,14 @@
 # Version history
 
+## 0.3.0 — Baseline research
+
+- Added a resumable, rate-limited five-season historical backfill and independent regular-season audit.
+- Recorded experiment splits, one-configuration budget, features, baselines and limitations before real-data fitting, with a separate source-backed eligibility correction for play-ins and Cup finals.
+- Added chronological score-feature construction, regularized logistic and score-margin baselines, fixed expanding-window comparisons, calibration tables, and private experiment registration/report artifacts.
+- Added tests for target/future leakage, ordering, numeric fitting, official season membership, and locked research readiness.
+- Added a dashboard research view; all best-bet/shortlist qualification remains disabled. The final performance test remains unevaluated.
+- Credentials, raw history, odds snapshots and fitted model artifacts stay outside version control. No paid services or scheduled jobs were enabled.
+
 ## 0.2.0 — 2026-10-24
 
 - Confirmed zero-cost data setup and deferred bet365 automated coverage.

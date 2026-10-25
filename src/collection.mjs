@@ -3,6 +3,7 @@ import { mkdir, readFile, writeFile, open, rename } from 'node:fs/promises';
 import { join } from 'node:path';
 import { ROOT, readKeys } from './config.mjs';
 import { CollectionError, fetchProvider, gamesRequest, oddsRequest, normalizeGames, normalizeOdds } from './providers.mjs';
+import { researchStatus } from './research-status.mjs';
 
 const INDEX = 'collection-index.json';
 async function readIndex(root) {
@@ -92,5 +93,6 @@ export async function dataStatus(root = ROOT, environment = process.env) {
       } : null,
     };
   };
-  return { keyFileError, indexError, balldontlie: provider('balldontlie','BALLDONTLIE_API_KEY'), oddsapi: provider('oddsapi','ODDS_API_KEY'), model: 'Not trained', michiganPrices: 'Unverified', scheduled: false, bet365: 'Deferred' };
+  const research=await researchStatus(root);
+  return { keyFileError, indexError, balldontlie: provider('balldontlie','BALLDONTLIE_API_KEY'), oddsapi: provider('oddsapi','ODDS_API_KEY'), model: research.state, michiganPrices: 'Unverified', scheduled: false, bet365: 'Deferred' };
 }

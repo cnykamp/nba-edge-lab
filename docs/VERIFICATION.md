@@ -20,3 +20,16 @@ Not verified: physical-phone/LAN access, shared storage, export/import recovery,
 - Verified provider-published storage/model-use permissions for BALLDONTLIE and The Odds API. Identified TheRundown retention restriction and disabled its archival path. These are documented provider permissions, not authentication tests or an assessment of all third-party rights.
 
 Still pending: user-created accounts/keys, first real bounded calls, season reconciliation, actual book/market/quota behavior, Michigan price comparison, model experiments, live or historical betting performance, schedules and physical-phone access. No model training or actual provider request was performed during v0.2 verification.
+
+## v0.3 verification — 2026-10-25
+
+- Actual provider calls succeeded: five historical page chains exhausted, independent regular-season coverage passed for 6,150 games, and the first three-book odds snapshot returned 100 normalized quotes with 498 credits remaining. These are bounded observations, not continuous feed or Michigan-price verification.
+- Baseline 001 was registered and fitted once after its specification and structural eligibility correction were pushed. Training/development counts were 3,520/1,230; final-test performance remained unevaluated. See BASELINE_RESULTS.md for all results and fitting limits.
+- Verified a second baseline invocation is refused before fitting; the original registration hash stayed unchanged.
+- All 23 automated tests passed with local socket access. An initial restricted run aborted the HTTP test inside Node; rerunning with local socket permission passed. Syntax checks passed across 15 modules. Tests use isolated synthetic data and temporary storage.
+- The actual local research API returned the same candidate log loss and row counts as the saved private report. The response excluded fitted weights and kept recommendations and final-test evaluation disabled. The server allowlist rejects private data/artifact paths.
+- Chrome displayed the real report: 3,520 training games, 1,230 development games, 11.06-point margin MAE, candidate 0.6120 log loss and 66.4% accuracy, alongside both comparators. Latest-snapshot book labels reflected observed three-book coverage while retaining MI-unverified labels.
+- Desktop and 390 × 844 screenshots inspected. Research cards stack at phone size and the comparison table scrolls horizontally. Viewport was restored. The real journal remained empty; no actual bet was placed or recorded.
+- Browser logs contained extension-style “Could not establish connection. Receiving end does not exist.” messages. No app console logging or extension messaging is implemented in this app; source inspection and the visible/API report flow passed. A completely clean browser console is not claimed.
+
+Still pending: physical-phone/network access, shared journal storage, original forward forecasts, event matching, uncertainty validation, selected-bet policy/returns, market comparisons, Michigan-price equivalence, final performance test and model promotion. No paid services or schedules were enabled.
