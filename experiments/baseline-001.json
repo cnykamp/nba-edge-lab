@@ -1,0 +1,112 @@
+{
+  "id": "baseline-001",
+  "purpose": "Predictive development baseline; no betting qualification or ROI claim",
+  "schemaVersion": 1,
+  "seasons": [
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "trainSeasons": [
+    2021,
+    2022,
+    2023
+  ],
+  "developmentSeasons": [
+    2024
+  ],
+  "sealedTestSeasons": [
+    2025
+  ],
+  "finalTestPolicy": "Do not evaluate or display final-test metrics in this experiment runner",
+  "trialBudget": 1,
+  "features": [
+    "intercept",
+    "elo_difference_divided_by_400",
+    "last_20_game_margin_difference_divided_by_10",
+    "capped_rest_day_difference_divided_by_7"
+  ],
+  "minimumPastResultsPerTeam": 10,
+  "scoreAvailabilityLagCalendarDays": 3,
+  "historicalAvailabilityAssumption": "Retrospective final scores are assumed available three calendar days after provider gameDate; publication/correction timestamps are not independently archived. This is an approximation, not a verified point-in-time backtest.",
+  "elo": {
+    "initial": 1500,
+    "k": 20,
+    "homeAdvantage": 60,
+    "offseasonCarry": 0.75
+  },
+  "recentMarginWindow": 20,
+  "restCapDays": 7,
+  "logistic": {
+    "l2MeanPenalty": 0.01,
+    "learningRate": 0.1,
+    "maxIterations": 3000,
+    "gradientTolerance": 1e-08
+  },
+  "marginRidge": {
+    "l2MeanPenalty": 0.01
+  },
+  "baselines": [
+    "training_home_win_frequency",
+    "fixed_elo_with_60_point_home_advantage",
+    "training_mean_home_margin"
+  ],
+  "metrics": [
+    "log_loss",
+    "brier",
+    "accuracy",
+    "calibration_buckets",
+    "margin_mae",
+    "margin_rmse"
+  ],
+  "calibrationBuckets": [
+    0,
+    0.2,
+    0.4,
+    0.6,
+    0.8,
+    1
+  ],
+  "coverageRequirements": {
+    "regularGamesPerSeason": 1230,
+    "teamsPerSeason": 30,
+    "gamesPerTeam": 82,
+    "finalScoresRequired": true
+  },
+  "researchAcceptance": "Finite fitted parameters and complete development report; report baseline losses honestly; no performance-based promotion in this version",
+  "recommendationsEnabled": false,
+  "betSelectionPolicy": "Locked: no best bet, shortlist, edge threshold or stake recommendation may be emitted",
+  "uncertaintyIntervals": "Not implemented or claimed in baseline-001",
+  "promotion": "No production promotion; final-test and forward selected-pick evidence remain required",
+  "walkForwardFolds": [
+    {
+      "train": [
+        2021
+      ],
+      "validate": [
+        2022
+      ]
+    },
+    {
+      "train": [
+        2021,
+        2022
+      ],
+      "validate": [
+        2023
+      ]
+    },
+    {
+      "train": [
+        2021,
+        2022,
+        2023
+      ],
+      "validate": [
+        2024
+      ]
+    }
+  ]
+}
