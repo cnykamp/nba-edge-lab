@@ -33,3 +33,25 @@ Still pending: user-created accounts/keys, first real bounded calls, season reco
 - Browser logs contained extension-style “Could not establish connection. Receiving end does not exist.” messages. No app console logging or extension messaging is implemented in this app; source inspection and the visible/API report flow passed. A completely clean browser console is not claimed.
 
 Still pending: physical-phone/network access, shared journal storage, original forward forecasts, event matching, uncertainty validation, selected-bet policy/returns, market comparisons, Michigan-price equivalence, final performance test and model promotion. No paid services or schedules were enabled.
+
+## v0.4 verification — 2026-10-25
+
+Story: the daily-board button → guarded local POST → bounded free-provider snapshots → frozen model inference → append-only paper ledger → sanitized GET → displayed forecasts and prices. Scores-only checking follows the same path without requesting odds or modifying a capture.
+
+| Boundary | Evidence |
+| --- | --- |
+| UI/action | Chrome triggered Save today's board and Check results; running buttons disabled, then restored after completion. |
+| Local API | Real GET showed the saved capture and seven pending primary forecasts. Automated HTTP tests reject foreign Origin/Host and overlapping actions. |
+| Provider/input | Current-season bounded query exhausted in one page with 52 records through tomorrow. Odds snapshot returned 104 normalized quotes; the response reported 494 credits remaining after the second capture. |
+| Inference | Original baseline config/source/dataset/model integrity checks passed. No fitting or final-test performance evaluation occurred. All seven forecasts used the frozen builder and coefficients. |
+| Matching | Forward-001 withheld five comparisons because the exact team matches had ten-minute provider time differences. It remains unchanged. Forward-002 was registered/pushed before capture and before outcomes; all seven games then matched all three books with complete moneyline and spread pairs. |
+| Persistence | Two original captures remain hash-identical; source hashes for the active implementation match. Capture history retains both policy IDs; statistics use the active cohort, seven games rather than fourteen. |
+| Results | A real result check appended a results-check record with zero final updates. All games remained pending. Odds-snapshot count stayed at three (one earlier v0.3 snapshot plus two v0.4 captures). |
+| Rendering | Chrome showed the actual saved 7/0 forecast/result counts, input explanations, both-side prices and pending performance. No fabricated outcome or confidence interval appeared. |
+
+- All 35 automated tests passed; syntax checks passed across 20 modules. Tests cover causal features/score lag, same-event/book pairing, stale/ambiguous/reversed markets, bounded pagination, version cohorts, original-forecast accounting, correction chains, integrity failures, future-tipoff settlement rejection and local API controls. Synthetic tests use disposable temporary roots and do not touch the real journal.
+- Desktop and 390 × 844 screenshots inspected. An observed grid-width overflow was fixed: phone document width now equals the 390-pixel viewport, first card width is 354 pixels, probabilities wrap, and the wider quote table scrolls within its card. The temporary viewport was restored.
+- Original captures were re-read after the scores-only check; hashes and active implementation were unchanged. Fitted weights are excluded from the paper-board response; credentials, private data and model artifacts remain ignored by Git. Real journal remained at zero entries.
+- Forward policies were pushed before their respective real captures. The matching amendment addresses observed provider metadata, not model errors or outcomes. No model settings changed.
+
+Not yet verified: a real captured game reaching final/being corrected (synthetic paths pass), physical-phone/LAN access, Michigan price equivalence, fixed-time capture completeness, calibrated intervals, spread-cover/push probabilities, best/shortlist selection, returns, final-test performance or model promotion. Manual capture availability is not a qualified no-bet result. The current season-bounded runner needs a follow-up policy for result checks after the regular-season boundary. No paid services, actual wagers, scheduled jobs, or automatic retraining were enabled.

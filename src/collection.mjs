@@ -37,9 +37,9 @@ export function checkBudget(index, provider, now) {
     if (last && Date.parse(now) - Date.parse(last.at) < 60000) throw new CollectionError('LOCAL_RATE_LIMIT', 'Wait at least 60 seconds between odds snapshots.');
   }
 }
-export async function collect(provider, { season, cursor, root = ROOT, environment = process.env, fetchImpl = fetch } = {}) {
+export async function collect(provider, { season, cursor, startDate, endDate, root = ROOT, environment = process.env, fetchImpl = fetch } = {}) {
   if (!['balldontlie', 'oddsapi'].includes(provider)) throw new CollectionError('INVALID_ARGUMENT', 'Unsupported provider. TheRundown archival collection is disabled.');
-  const url = provider === 'balldontlie' ? gamesRequest(season, cursor) : oddsRequest();
+  const url = provider === 'balldontlie' ? gamesRequest(season, cursor, { startDate, endDate }) : oddsRequest();
   const keys = await readKeys(root, environment);
   const key = keys[provider === 'balldontlie' ? 'BALLDONTLIE_API_KEY' : 'ODDS_API_KEY'];
   if (!key) throw new CollectionError('MISSING_KEY', 'No local provider key is configured. Run npm run setup:keys.');
@@ -57,7 +57,7 @@ export async function collect(provider, { season, cursor, root = ROOT, environme
     const id = randomUUID();
     const metadata = {
       id, provider, observedAt: response.observedAt, source: response.source,
-      query: provider === 'balldontlie' ? { season, cursor: cursor ?? null, perPage: 100 } : { region: 'us', books: ['FanDuel', 'DraftKings', 'BetMGM'], markets: ['Moneyline', 'Spread'] },
+      query: provider === 'balldontlie' ? { season, cursor: cursor ?? null, perPage: 100, ...(startDate ? { startDate, endDate } : {}) } : { region: 'us', books: ['FanDuel', 'DraftKings', 'BetMGM'], markets: ['Moneyline', 'Spread'] },
       payloadSha256: response.payloadSha256, payloadRedacted: response.payloadRedacted,
       quota: response.safeHeaders, records: normalized.games?.length ?? normalized.quotes?.length ?? 0,
       nextCursor: normalized.nextCursor ?? null,
@@ -65,7 +65,7 @@ export async function collect(provider, { season, cursor, root = ROOT, environme
       // A page or exhausted cursor does not independently establish season coverage.
       complete: false,
       booksPresent: normalized.booksPresent ?? [], geographyVerified: false,
-      state: 'API response validated; model not trained; Michigan prices unverified',
+      state: 'API response validated; no betting qualification; Michigan prices unverified',
     };
     const snapshotDir = join(dataDir, 'snapshots', provider); await mkdir(snapshotDir, { recursive: true, mode: 0o700 });
     await writeFile(join(snapshotDir, `${id}.json`), JSON.stringify({ metadata, raw: response.payload, normalized }, null, 2) + '\n', { flag: 'wx', mode: 0o600 });

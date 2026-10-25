@@ -10,7 +10,7 @@ export class CollectionError extends Error {
 }
 function fail(message) { throw new CollectionError('INVALID_RESPONSE', message); }
 function validTime(value) { return typeof value === 'string' && /(Z|[+-]\d{2}:\d{2})$/.test(value) && Number.isFinite(Date.parse(value)); }
-export function gamesRequest(season, cursor) {
+export function gamesRequest(season, cursor, { startDate, endDate } = {}) {
   if (!Number.isInteger(season) || season < 1946 || season > new Date().getUTCFullYear()) throw new CollectionError('INVALID_ARGUMENT', 'Choose a valid NBA season start year.');
   const url = new URL('https://api.balldontlie.io/v1/games');
   url.searchParams.set('seasons[]', String(season));
@@ -18,6 +18,11 @@ export function gamesRequest(season, cursor) {
   if (cursor != null) {
     if (!Number.isSafeInteger(cursor) || cursor < 0) throw new CollectionError('INVALID_ARGUMENT', 'Cursor must be a nonnegative integer.');
     url.searchParams.set('cursor', String(cursor));
+  }
+  if(startDate != null || endDate != null) {
+    const valid=d=>typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)&&Number.isFinite(Date.parse(d+'T00:00:00Z'))&&new Date(d+'T00:00:00Z').toISOString().slice(0,10)===d;
+    if(!valid(startDate)||!valid(endDate)||startDate>endDate)throw new CollectionError('INVALID_ARGUMENT','Invalid game date range.');
+    url.searchParams.set('start_date',startDate);url.searchParams.set('end_date',endDate);
   }
   return url;
 }
@@ -47,7 +52,7 @@ export function normalizeGames(payload, observedAt) {
       homeTeamId: game.home_team.id ?? null, awayTeamId: game.visitor_team.id ?? null,
       status, homeScore: final ? game.home_team_score : null, awayScore: final ? game.visitor_team_score : null,
       postseason: typeof game.postseason === 'boolean' ? game.postseason : null,
-      seasonType: game.season_type ?? null, observedAt,
+      seasonType: game.season_type ?? null, postponed: game.postponed === true, istStage: game.ist_stage ?? null, observedAt,
       historicalAvailability: 'Historical final-score timing is unverified; observedAt is the retrieval time, not a backdated availability claim.',
     };
   });

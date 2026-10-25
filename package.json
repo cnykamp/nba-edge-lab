@@ -1,6 +1,6 @@
 {
   "name": "nba-edge-lab",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "description": "Private NBA forecasting research and daily dashboard",
@@ -17,6 +17,9 @@
     "data:odds": "node scripts/data.mjs odds",
     "research:baseline": "node scripts/research.mjs",
     "data:backfill": "node scripts/backfill.mjs",
-    "research:audit": "node scripts/audit.mjs"
+    "research:audit": "node scripts/audit.mjs",
+    "paper:capture": "node scripts/paper.mjs capture",
+    "paper:results": "node scripts/paper.mjs results",
+    "paper:status": "node scripts/paper.mjs status"
   }
 }

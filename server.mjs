@@ -3,16 +3,34 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dataStatus } from './src/collection.mjs';
 import { researchStatus } from './src/research-status.mjs';
+import { paperBoard, runPaperOperation } from './src/paper-engine.mjs';
 
 // Exact routes avoid exposing repository files, credentials, or raw data.
 const routes = new Map([
   ['/', ['index.html', 'text/html; charset=utf-8']],
   ['/style.css', ['style.css', 'text/css; charset=utf-8']],
   ['/app.mjs', ['app.mjs', 'text/javascript; charset=utf-8']],
+  ['/paper.mjs', ['paper.mjs', 'text/javascript; charset=utf-8']],
   ['/domain.mjs', ['domain.mjs', 'text/javascript; charset=utf-8']],
 ]);
-export function makeServer({ root, environment } = {}) {
+export function makeServer({ root, environment, paperOperation = runPaperOperation } = {}) {
+  let operation={running:false};
   return createServer(async (req, res) => {
+    const json=(code,value)=>{res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(JSON.stringify(value));};
+    if(!/^127\.0\.0\.1:\d+$/.test(req.headers.host??''))return json(403,{message:'Use the local loopback dashboard address.'});
+    if(req.url==='/api/paper-board'&&req.method==='GET')return json(200,{...await paperBoard(root),operation});
+    if(['/api/paper-capture','/api/paper-results'].includes(req.url)&&req.method==='POST') {
+      // Loopback, exact Origin and custom header block cross-site forms and DNS rebinding.
+      const host=req.headers.host??'';
+      if(!/^127\.0\.0\.1:\d+$/.test(host)||req.headers.origin!==`http://${host}`||req.headers['x-nba-research']!=='manual'||req.headers['content-type']!=='application/json'||Number(req.headers['content-length']??0)>64||req.headers['transfer-encoding'])return json(403,{message:'Open the local dashboard to run this action.'});
+      if(operation.running)return json(409,{message:'A research operation is already running.'});
+      const mode=req.url==='/api/paper-capture'?'capture':'results';
+      operation={running:true,mode,startedAt:new Date().toISOString()};
+      json(202,{accepted:true,mode});
+      // Request starts work; dashboard polling never collects or trains.
+      void Promise.resolve().then(()=>paperOperation(mode,{root,environment})).then(result=>{operation={running:false,mode,completedAt:new Date().toISOString(),result};},error=>{operation={running:false,mode,completedAt:new Date().toISOString(),message:error.code?error.message:'Research operation failed; saved records were preserved.'};});
+      return;
+    }
     if (req.url === '/api/research-status' && req.method === 'GET') {
       res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
       return res.end(JSON.stringify(await researchStatus(root)));

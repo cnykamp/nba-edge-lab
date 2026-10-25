@@ -1,3 +1,4 @@
+import './paper.mjs';
 import { validateBet, summarize, netProfit, RESULTS } from './domain.mjs';
 const storageKey = 'nba-edge-lab:journal:v1';
 // A QA session is isolated from the real journal and expires with its tab.
@@ -154,3 +155,5 @@ async function showResearch() {
   }catch{$('research-summary').textContent='Research status unavailable. Recommendations remain locked.';}
 }
 showResearch();
+
+window.addEventListener('paper-data-updated',showDataStatus);

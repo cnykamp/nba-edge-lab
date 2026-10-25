@@ -1,5 +1,14 @@
 # Version history
 
+## 0.4.0 — 2026-10-25
+
+- Added manual daily capture and score-check actions to the responsive dashboard, with CLI equivalents and bounded free-provider requests.
+- Reused baseline-001's frozen features/weights for original future-game forecasts, expected margins and input-grounded explanations. No retraining, final-test performance evaluation or model promotion.
+- Added same-event/book moneyline normalization, both sides' moneyline/spread prices, freshness/lead-time gates and explicit unavailable states. No cover probabilities, uncertainty intervals, qualified picks or ROI claims.
+- Added a private hash-linked append-only capture/result ledger, correction successors and first-forecast accounting within separate policy cohorts.
+- Preserved the first forward-001 capture when actual feeds differed by ten minutes. Registered forward-002 before another capture, allowing fifteen-minute event matching plus a fifteen-minute minimum forecast lead. Both records remain intact.
+- Added local Origin/Host checks, serialized operations and tests for matching, timing, leakage, correction chains, accounting and integrity.
+
 ## 0.3.0 — Baseline research
 
 - Added a resumable, rate-limited five-season historical backfill and independent regular-season audit.
