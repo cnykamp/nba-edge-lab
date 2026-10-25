@@ -108,5 +108,38 @@
         2024
       ]
     }
-  ]
+  ],
+  "regularSeasonBoundaries": {
+    "2021": {
+      "start": "2021-10-19",
+      "end": "2022-04-10",
+      "cupFinalDate": null,
+      "source": "https://pr.nba.com/2021-22-nba-schedule-75th-anniversary-season/"
+    },
+    "2022": {
+      "start": "2022-10-18",
+      "end": "2023-04-09",
+      "cupFinalDate": null,
+      "source": "https://www.nba.com/news/nba-unveils-2022-23-regular-season-schedule"
+    },
+    "2023": {
+      "start": "2023-10-24",
+      "end": "2024-04-14",
+      "cupFinalDate": "2023-12-09",
+      "source": "https://www.nba.com/news/nba-to-z-a-fans-guide-the-2023-24-season",
+      "cupSource": "https://www.nba.com/news/nba-in-season-tournament-key-dates-schedule"
+    },
+    "2024": {
+      "start": "2024-10-22",
+      "end": "2025-04-13",
+      "cupFinalDate": "2024-12-17",
+      "source": "https://www.nba.com/news/nba-starting-5-august-15-2024"
+    },
+    "2025": {
+      "start": "2025-10-21",
+      "end": "2026-04-12",
+      "cupFinalDate": "2025-12-16",
+      "source": "https://pr.nba.com/2025-26-nba-regular-season-schedule/"
+    }
+  }
 }

@@ -36,3 +36,7 @@ One small dependency-free implementation keeps this first baseline inspectable. 
 Fitting success means finite parameters and a reproducible development report. It is **not** model promotion. All best-bet/shortlist qualification stays locked. Historical market comparisons, spread-cover probabilities including push handling, uncertainty intervals, independently evaluated final-test performance and a forward recommendation record remain separate milestones. The reserved test must not become a recurring tuning score.
 
 Method references: https://scikit-learn.org/stable/modules/cross_validation.html#time-series-split and https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression. The project uses its own transparent implementation, not scikit-learn.
+
+## Pre-fit structural audit correction
+
+The first completed 2022-season page chain contained 1,236 non-postseason records, including six play-in games. No model had been fitted or evaluated. Eligibility now also uses NBA-published regular-season date boundaries and Cup championship dates, recorded with source URLs in the config. This changes dataset membership based on official competition definitions, not model errors. The 2021 season independently matched 1,230 games and 82/team. All five seasons must still pass after this correction.
