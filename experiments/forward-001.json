@@ -1,0 +1,31 @@
+{
+  "id": "forward-001",
+  "version": 1,
+  "mode": "manual paper research; no betting qualification",
+  "modelId": "baseline-001",
+  "timezone": "America/Detroit",
+  "season": 2026,
+  "regularSeason": {
+    "start": "2026-10-20",
+    "end": "2027-04-11",
+    "cupFinalDate": "2026-12-11",
+    "source": "https://pr.nba.com/2026-27-nba-regular-season-schedule"
+  },
+  "maxGamePages": 15,
+  "minimumGameRequestIntervalMs": 13100,
+  "maxSnapshotAgeSeconds": 300,
+  "maxSourceQuoteAgeSeconds": 1800,
+  "maxEventStartDifferenceSeconds": 300,
+  "teamAliases": { "LA Clippers": "Los Angeles Clippers" },
+  "ordering": "Scheduled start, then provider game ID; no edge-based ranking",
+  "marketProbability": "Within-book proportional normalization of two same-event moneyline implied probabilities; no cross-book synthetic pairs",
+  "primaryForecast": "First successfully saved pre-tipoff forecast per game under this policy. Later captures are updates, never replacements.",
+  "evaluation": "All primary forecasts with verified final scores; paired model vs mean available within-book no-vig probabilities on the same eligible subset; no ROI or selected-bet claims",
+  "retrieval": "Fresh current-season game pages from season start through tomorrow, exhausted within bound. Fresh odds only for capture, never for result checking. Failed or empty captures are recorded.",
+  "features": "Frozen baseline-001 features and fitted coefficients; same three-calendar-day score lag. All input snapshots observed before forecast creation. 2025 scores may seed state; reserved-test performance remains unevaluated.",
+  "exclusions": "Only scheduled future regular-season games on the capture's Eastern date; exclude Cup final, postponed, unknown status, ambiguous matches, already-started games, unsupported teams and insufficient or unresolved history.",
+  "settlement": "Append-only score observations for captured 2026 games. Validate provider ID, team identity, scheduled start and final state; corrections append a successor record. No sportsbook settlement or returns.",
+  "recommendationsEnabled": false,
+  "uncertaintyIntervals": null,
+  "automaticRetraining": false
+}
