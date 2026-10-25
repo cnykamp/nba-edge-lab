@@ -104,3 +104,28 @@ if (qa) {
   document.querySelector('#ledger-section > .section-note').textContent = 'QA only: records are isolated from the real journal and expire when this tab closes.';
 }
 render();
+
+async function showDataStatus() {
+  try {
+    const response = await fetch('/api/data-status', { cache: 'no-store' });
+    if (!response.ok) throw new Error('status unavailable');
+    const status = await response.json();
+    for (const [element, provider] of [['games-status','balldontlie'],['odds-status','oddsapi']]) {
+      const value = status[provider];
+      if (!value || typeof value.keyConfigured !== 'boolean') throw new Error('invalid status');
+      if (status.keyFileError) $(element).textContent = 'Local key file needs attention. Run the setup check.';
+      else if (!value.keyConfigured) $(element).textContent = 'Step 1: create the free account, then save your key locally.';
+      else if (!value.lastCollection) $(element).textContent = 'Key saved locally · API access not tested yet.';
+      else {
+        const date = value.lastCollection.observedAt ? new Intl.DateTimeFormat('en-US',{ timeZone:'America/New_York',month:'short',day:'numeric',hour:'numeric',minute:'2-digit' }).format(new Date(value.lastCollection.observedAt)) : 'unknown time';
+        $(element).textContent = `Last collection: ${date} ET · ${value.lastCollection.records ?? 'unknown'} records. ${provider === 'balldontlie' ? 'Full-season coverage unverified.' : 'Research snapshot; Michigan prices unverified.'}`;
+      }
+    }
+    if (status.indexError) $('data-message').textContent = 'The collection history could not be read. Existing records were preserved; data readiness is unknown.';
+  } catch {
+    $('games-status').textContent = 'Local data status unavailable.';
+    $('odds-status').textContent = 'Local data status unavailable.';
+    $('data-message').textContent = 'Start the dashboard with npm start to check setup. Missing status is not a successful connection.';
+  }
+}
+showDataStatus();

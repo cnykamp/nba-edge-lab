@@ -1,5 +1,14 @@
 # Version history
 
+## 0.2.0 — 2026-10-24
+
+- Confirmed zero-cost data setup and deferred bet365 automated coverage.
+- Verified retention rights; replaced the proposed TheRundown archival path with The Odds API Free. TheRundown collection stays disabled.
+- Added hidden local key setup, owner-only key file handling and secret-free readiness reporting.
+- Added one-page game retrieval, three-book upcoming-odds snapshots, normalization and provenance, private snapshot storage, and local request/credit ceilings.
+- Added dashboard setup state that distinguishes saved credentials from tested API access and validated research.
+- Added synthetic provider/security tests; no authenticated provider response or model training yet.
+
 ## 0.1.0 — 2026-10-24
 
 - Established the private repository and agreed product scope.

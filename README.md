@@ -1,12 +1,12 @@
 # NBA Edge Lab
 
-Private NBA forecasting research for Michigan, USA. Version 0.1 establishes the product, source audit, evaluation contract, and a responsive local dashboard with a manual bet journal.
+Private NBA forecasting research for Michigan, USA. Version 0.2 adds free-provider key setup and bounded data collectors to the responsive local dashboard and manual bet journal.
 
-**No trained model, live odds integration, automated collection, forecast intervals, market comparisons, or verified betting edge exists yet.** Missing data is not a no-edge finding.
+**No trained model, authenticated provider test, automated schedule, forecast intervals, market comparison, or verified betting edge exists yet.** Provider collectors are implemented and tested with synthetic responses; real access remains untested until free accounts/keys are configured. Missing data is not a no-edge finding.
 
 ## Run
 
-Requires Node.js 22 or newer. No installation, external services, API keys, or paid subscriptions are needed for this version.
+Requires Node.js 22 or newer. No installation or paid subscriptions are needed. Viewing the dashboard and using the journal require no API keys. Real data collection requires free provider accounts and locally saved keys; follow [the setup walkthrough](docs/SETUP.md).
 
 ```sh
 npm test
@@ -18,6 +18,9 @@ Open http://127.0.0.1:4173 on the laptop. The interface is responsive for phone-
 
 ## What works
 
+- Hidden owner-only local key setup, safe readiness reporting, and bounded BALLDONTLIE / The Odds API collectors. No TheRundown archival collector is enabled.
+- One game page or one three-book NBA odds snapshot per explicit command, with normalized records, provenance, immutable-by-collector snapshot files and local rate/credit guards. No automatic jobs.
+
 - Responsive daily board with explicit unavailable states for best opportunity, three shortlist slots, forecast intervals, and update schedule.
 - Manual journal for moneyline/spread bets at FanDuel, DraftKings, BetMGM, and bet365. Recording a bet does not establish live feed coverage or a model recommendation.
 - American odds, selected-team spread, Eastern wall-clock time, accepted stake, and user-reported win/loss/push/void settlement.
@@ -28,12 +31,12 @@ The journal is stored in **this browser's local storage**, not in GitHub or on a
 
 ## Agreed product
 
-One best qualifying NBA moneyline or spread opportunity plus up to three others, or no qualifying opportunity. Morning and pregame snapshots; FanDuel, DraftKings, BetMGM, and bet365 where feeds support them. Estimated outcome probabilities, defensible uncertainty, feature-grounded explanations, immutable forecast history, and separate actual-bet and full-recommendation performance. Fixed stakes are an evaluation convention, not evidence of profit. Budget starts at $0. Completed versions receive tested milestone commits and pushes to this private repository.
+One best qualifying NBA moneyline or spread opportunity plus up to three others, or no qualifying opportunity. Morning and pregame snapshots; FanDuel, DraftKings and BetMGM first; bet365 deferred by user choice. Estimated outcome probabilities, defensible uncertainty, feature-grounded explanations, immutable forecast history, and separate actual-bet and full-recommendation performance. Fixed stakes are an evaluation convention, not evidence of profit. Budget starts at $0. Completed versions receive tested milestone commits and pushes to this private repository.
 
 ## Build sequence
 
 1. **v0.1 — foundation:** dashboard/journal, documented feasibility, evaluation design. This commit.
-2. **Data collection:** obtain user-selected free provider keys; authenticate and test coverage, timestamps, access rights, and quotas; save raw snapshots privately with retrieval times and hashes. No account signup, paid trial, or scheduler has been created.
+2. **v0.2 — data setup:** key helper, collectors, private snapshots, quota guards and source-rights update implemented. User must create free accounts and save keys. Authentication and actual coverage tests remain pending. No signup, paid trial, or scheduler has been created.
 3. **Forecast baseline:** ingest completed games, construct past-only team-strength/rest/margin features, establish chronological splits, and train regularized baselines. No historical ROI claim without contemporaneous prices.
 4. **Forward research:** record morning and pregame predictions before tipoff, verify selection logic and settlement, and compare with market baselines.
 5. **Model qualification:** assess predeclared evidence requirements. Only then enable qualifying recommendations and documented intervals; support no-bet days.
@@ -41,6 +44,8 @@ One best qualifying NBA moneyline or spread opportunity plus up to three others,
 
 ## Project records
 
+- [Free account/key walkthrough](docs/SETUP.md)
+- [User decisions](docs/DECISIONS.md)
 - [Source feasibility](docs/DATA_FEASIBILITY.md)
 - [Evaluation contract](docs/EVALUATION.md)
 - [Data contract](docs/DATA_CONTRACT.md)

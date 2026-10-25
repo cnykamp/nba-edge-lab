@@ -1,6 +1,6 @@
 {
   "name": "nba-edge-lab",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Private NBA forecasting research and daily dashboard",
@@ -8,6 +8,10 @@
   "scripts": {
     "start": "node server.mjs",
     "test": "node --test test/*.test.mjs",
-    "check": "node --check server.mjs && node --check public/app.mjs && node --check public/domain.mjs"
+    "check": "node scripts/check.mjs",
+    "setup:keys": "node scripts/setup-keys.mjs",
+    "data:status": "node scripts/data.mjs status",
+    "data:games": "node scripts/data.mjs games",
+    "data:odds": "node scripts/data.mjs odds"
   }
 }

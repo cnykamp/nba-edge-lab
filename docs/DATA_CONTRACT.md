@@ -1,6 +1,6 @@
 # Planned research records
 
-Not implemented in v0.1. Store private records outside Git; never use personal betting journals as training labels.
+v0.2 implements private raw/normalized game-page and odds snapshots with IDs, hashes, source/retrieval timestamps and a collection index. Forecasts, selections, experiments, settlement reconciliation and a complete training dataset remain future work. Store private records outside Git; never use personal betting journals as training labels.
 
 | Record | Required fields / invariants |
 | --- | --- |

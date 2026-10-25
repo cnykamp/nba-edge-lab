@@ -1,6 +1,7 @@
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { dataStatus } from './src/collection.mjs';
 
 // Exact routes avoid exposing repository files, credentials, or raw data.
 const routes = new Map([
@@ -9,8 +10,13 @@ const routes = new Map([
   ['/app.mjs', ['app.mjs', 'text/javascript; charset=utf-8']],
   ['/domain.mjs', ['domain.mjs', 'text/javascript; charset=utf-8']],
 ]);
-export function makeServer() {
+export function makeServer({ root, environment } = {}) {
   return createServer(async (req, res) => {
+    if (req.url === '/api/data-status' && req.method === 'GET') {
+      const status = await dataStatus(root, environment);
+      res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
+      return res.end(JSON.stringify(status));
+    }
     const route = routes.get(req.url);
     if (!route || !['GET', 'HEAD'].includes(req.method)) {
       res.writeHead(404); return res.end('Not found');
