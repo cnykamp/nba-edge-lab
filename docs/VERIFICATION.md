@@ -55,3 +55,10 @@ Story: the daily-board button → guarded local POST → bounded free-provider s
 - Forward policies were pushed before their respective real captures. The matching amendment addresses observed provider metadata, not model errors or outcomes. No model settings changed.
 
 Not yet verified: a real captured game reaching final/being corrected (synthetic paths pass), physical-phone/LAN access, Michigan price equivalence, fixed-time capture completeness, calibrated intervals, spread-cover/push probabilities, best/shortlist selection, returns, final-test performance or model promotion. Manual capture availability is not a qualified no-bet result. The current season-bounded runner needs a follow-up policy for result checks after the regular-season boundary. No paid services, actual wagers, scheduled jobs, or automatic retraining were enabled.
+
+## First real final-score reconciliation — 2026-10-26
+
+- Ran the existing scores-only operation; current provider final scores matched all seven user-supplied screenshot scores for the October 25 slate.
+- Appended seven outcome records per preserved policy cohort (14 records for the same seven games), then a results-check record. Active-policy metrics correctly show 7 settled and 0 pending; model 4/7, same-cutoff market 5/7, with the probability metrics recorded in FORWARD_STATUS.md.
+- Revalidated the two original capture hashes and the fitted model file hash. Originals and coefficients are unchanged. No odds request, retraining, source change, or final-test performance evaluation was performed.
+- This verifies the first real final-score path in addition to the previously passing synthetic correction tests. A real provider score correction remains unobserved. No actual bet or return was inferred.
