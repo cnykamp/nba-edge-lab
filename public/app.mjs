@@ -1,3 +1,4 @@
+import './candidate.mjs';
 import './paper.mjs';
 import { validateBet, summarize, netProfit, RESULTS } from './domain.mjs';
 const storageKey = 'nba-edge-lab:journal:v1';

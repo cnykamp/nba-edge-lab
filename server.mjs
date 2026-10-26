@@ -3,7 +3,9 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dataStatus } from './src/collection.mjs';
 import { researchStatus } from './src/research-status.mjs';
-import { paperBoard, runPaperOperation } from './src/paper-engine.mjs';
+import { candidateBoard as paperBoard, runCandidateOperation as runPaperOperation } from './src/candidate-engine.mjs';
+import {candidateStatus} from './src/candidate-research.mjs';
+import {saveAvailability} from './src/availability.mjs';
 
 // Exact routes avoid exposing repository files, credentials, or raw data.
 const routes = new Map([
@@ -11,6 +13,7 @@ const routes = new Map([
   ['/style.css', ['style.css', 'text/css; charset=utf-8']],
   ['/app.mjs', ['app.mjs', 'text/javascript; charset=utf-8']],
   ['/paper.mjs', ['paper.mjs', 'text/javascript; charset=utf-8']],
+  ['/candidate.mjs', ['candidate.mjs', 'text/javascript; charset=utf-8']],
   ['/domain.mjs', ['domain.mjs', 'text/javascript; charset=utf-8']],
 ]);
 export function makeServer({ root, environment, paperOperation = runPaperOperation } = {}) {
@@ -18,6 +21,16 @@ export function makeServer({ root, environment, paperOperation = runPaperOperati
   return createServer(async (req, res) => {
     const json=(code,value)=>{res.writeHead(code,{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(JSON.stringify(value));};
     if(!/^127\.0\.0\.1:\d+$/.test(req.headers.host??''))return json(403,{message:'Use the local loopback dashboard address.'});
+    if(req.url==='/api/candidate-status'&&req.method==='GET')return json(200,await candidateStatus(root));
+    if(req.url==='/api/availability'&&req.method==='POST') {
+      const host=req.headers.host??'';
+      if(req.headers.origin!==`http://${host}`||req.headers['x-nba-research']!=='manual'||req.headers['content-type']!=='application/json'||!/^\d+$/.test(req.headers['content-length']??'')||Number(req.headers['content-length'])>20000||req.headers['transfer-encoding'])return json(403,{message:'Use the local dashboard to save a review.'});
+      if(operation.running)return json(409,{message:'Wait for the research operation to finish.'});
+      try {
+        let body='';for await(const chunk of req){body+=chunk;if(Buffer.byteLength(body)>20000)return json(413,{message:'Review is too large.'});}
+        return json(200,await saveAvailability(JSON.parse(body),{root}));
+      }catch(e){return json(400,{message:e instanceof SyntaxError?'Invalid review format.':e.message});}
+    }
     if(req.url==='/api/paper-board'&&req.method==='GET')return json(200,{...await paperBoard(root),operation});
     if(['/api/paper-capture','/api/paper-results'].includes(req.url)&&req.method==='POST') {
       // Loopback, exact Origin and custom header block cross-site forms and DNS rebinding.

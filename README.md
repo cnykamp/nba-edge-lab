@@ -1,8 +1,8 @@
 # NBA Edge Lab
 
-Private NBA forecasting research for Michigan, USA. Version 0.4 adds a daily paper board with saved forward forecasts, book comparisons, and append-only result checks.
+Private NBA forecasting research for Michigan, USA. Version 0.5 adds a separately registered candidate, fresher forward state, recency/schedule context, input audits, calibration/distribution research and manual injury-report review. The original baseline and forecasts are preserved.
 
-**No validated betting edge, automated schedule, forecast interval, selected-bet return estimate or historical market-price comparison is available.** Free providers have authenticated successfully and five-season game coverage passed and a first real-data baseline is fitted. The dashboard reads the real private experiment report, preserves original forward captures, and keeps betting recommendations disabled. Missing data is not a no-edge finding.
+**No validated betting edge, automated schedule, win-probability confidence interval, selected-bet return estimate or historical market-price comparison is available.** Research-only margin prediction intervals are now implemented and tested on development data. Free providers have authenticated successfully and five-season game coverage passed and a first real-data baseline is fitted. The dashboard reads the real private experiment report, preserves original forward captures, and keeps betting recommendations disabled. Missing data is not a no-edge finding.
 
 ## Run
 
@@ -21,8 +21,9 @@ Open http://127.0.0.1:4173 on the laptop. The interface is responsive for phone-
 If you already had an older version running, stop it with **Control+C**, run `npm start` again, and refresh the browser. A browser refresh alone does not restart the server's new API routes.
 
 1. Open **Daily paper board** and click **Save today’s board** before games start. The active policy requires at least 15 minutes of lead time; late games remain unavailable. The app fetches current-season games and one fresh odds snapshot, then saves forecasts and matching prices.
-2. Read home/away win probabilities, expected margin, actual input-based explanation and both sides' prices. The model-minus-market number is a diagnostic percentage-point gap, not a qualified bet or confidence interval. Spread cover probability is not implemented.
-3. The next morning, click **Check results**. This requests game scores only, appends verified final-score observations, and compares the original forecasts with the same-cutoff market probabilities on the same games. No odds credits are consumed for results checking.
+2. Read home/away win probabilities, expected margin, actual input-based explanation and both sides' prices. The model-minus-market number is a diagnostic percentage-point gap, not a qualified bet or confidence interval. Candidate cover/push probabilities and empirical 80% margin prediction intervals are research-only; expand a game to audit the contributing results and current-season sample counts. The original baseline is shown beside the candidate.
+3. Optionally use **Injury review** to record both teams from an official report. Save the exact source/time and player statuses. A later review does not alter an earlier forecast; it can be included only in a later capture. Reviews do not apply a fitted player-impact adjustment or unlock bets.
+4. The next morning, click **Check results**. This requests game scores only, appends verified final-score observations, and compares the original forecasts with the same-cutoff market probabilities on the same games. No odds credits are consumed for results checking.
 
 The first forecast per game **within each policy** drives that policy's metrics. Later captures do not replace it or inflate sample size. Capture history retains older policies; the daily statistics show the active policy only. All records live in ignored `data/paper/` on this laptop. They are application-append-only with hash-chain checks, not external tamper-proof storage. Keep private backups. Manual captures do not establish fixed-time morning/pregame evidence.
 
@@ -51,12 +52,16 @@ One best qualifying NBA moneyline or spread opportunity plus up to three others,
 2. **v0.2 — data setup:** key helper, collectors, private snapshots, quota guards and source-rights update implemented. Free accounts/keys are now configured; both providers authenticated and initial responses were collected. Michigan price equivalence remains unverified. No signup, paid trial, or scheduler has been created.
 3. **v0.3 — forecast baseline:** independently audit 2021–2025 regular-season history, fit the predeclared regularized baselines, and evaluate development periods. The 2025 final performance test stays unevaluated. Historical score availability uses an explicit conservative approximation; no historical ROI claim is made.
 4. **v0.4 — manual forward research:** daily capture/result buttons, original forecasts, market pairing and separate policy cohorts implemented. Next: establish fixed-time morning/pregame policies and validate selection logic, uncertainty and returns.
-5. **Model qualification:** assess predeclared evidence requirements. Only then enable qualifying recommendations and documented intervals; support no-bet days.
-6. **Phone access:** authenticated hosting with private server-side journal storage and API secrets. Add screenshot entry later.
+5. **v0.5 — candidate research:** three fixed variants over two past-only fitting/calibration/evaluation periods, observed-before-cutoff forward finals, season/recency weighting, opponent/schedule context, detailed audit views, calibration and integer cover/push distribution, and manual source reviews. Separate forward-003 cohort; no automatic promotion. See all [development results](docs/CANDIDATE_002_RESULTS.md).
+6. **Model qualification:** assess predeclared evidence requirements. Only then enable qualifying recommendations and documented intervals; support no-bet days.
+7. **Phone access:** authenticated hosting with private server-side journal storage and API secrets. Add screenshot entry later.
 
 ## Project records
 
-- [Daily forward policy](docs/FORWARD_002.md)
+- [Candidate preregistration](docs/CANDIDATE_002.md)
+- [All candidate development results](docs/CANDIDATE_002_RESULTS.md)
+- [Manual data and scraping limits](docs/MANUAL_DATA.md)
+- [Original daily forward policy](docs/FORWARD_002.md)
 - [First baseline results](docs/BASELINE_RESULTS.md)
 - [Baseline experiment specification](docs/BASELINE_001.md)
 - [Free account/key walkthrough](docs/SETUP.md)
@@ -95,3 +100,7 @@ npm run paper:status
 No training is performed. A capture exhausts at most 15 current-season game pages with a 13.1-second request interval, then requests odds once within the existing UTC-day/month credit guards. No automatic retry or schedule exists. Results checking requests only games. Current policies cover the 2026–27 regular season; a follow-up policy is needed before continuing checks beyond the season boundary.
 
 If an operation is interrupted, do not delete its ledger or overwrite forecasts. A leftover local operation lock deliberately blocks another run; inspect the stopped process and preserved record before recovering it. Integrity failures, missing setup, stale/ambiguous inputs and incomplete pagination stop the operation or withhold individual comparisons.
+
+## Candidate research command
+
+`npm run research:candidate` runs the registered candidate exactly once, refuses an existing registration and never opens final-test performance. It is separate from all refresh/capture buttons. The local fitted candidate already exists; do not rerun or delete its registration to tune. New experiments require a new registered identity.

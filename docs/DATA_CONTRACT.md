@@ -1,6 +1,6 @@
 # Research records
 
-v0.4 implements private provider snapshots, the audited baseline dataset/experiment, original manual forward forecast records and append-only final-score research checks. Qualified selections, uncertainty intervals, financial settlement, actual-bet linkage and fixed-time policies remain future work. Store private records outside Git; never use personal betting journals as training labels.
+v0.5 adds candidate calibration/distribution experiments, a separate prospective cohort, per-forecast input audits and manual availability observations to the private provider snapshots, audited baseline and append-only capture/results ledger. Qualified selections, win-probability confidence intervals, financial settlement, actual-bet linkage and fixed-time policies remain future work. Store private records outside Git; never use personal betting journals as training labels.
 
 | Record | Required fields / invariants |
 | --- | --- |
@@ -19,6 +19,10 @@ All research times use timezone-aware UTC; display in America/New_York. Geograph
 
 `data/paper/ledger/NNNNNNNN.json` stores a sequence number, prior-record hash, entry and content hash. Writes are exclusive; reads reject missing/changed records. The operation lock serializes CLI/UI work. Owner modification of the entire chain is still possible; no external immutability is claimed.
 
-Capture entries include policy/config/model/implementation hashes, historical/current snapshot hashes, actual creation and input-cutoff times, original feature vectors/contributions, probabilities, expected margin, book-side quote IDs/prices, withheld reasons and unsupported/unmatched events. Qualified selection is always disabled. No probability interval or spread-cover/push model exists.
+Capture entries include policy/config/model/implementation hashes, historical/current snapshot hashes, actual creation and input-cutoff times, original feature vectors/contributions, probabilities, expected margin, book-side quote IDs/prices, withheld reasons and unsupported/unmatched events. Qualified selection is always disabled. Original forward-001/002 have no probability intervals or spread-cover/push model. Forward-003 includes a research-only empirical margin interval, line-specific cover/push/loss probabilities, raw/calibrated win probabilities, unchanged baseline shadow, contributing-game/season/timing audits and availability state known at cutoff. The 80% margin interval is not a win-probability confidence interval.
 
 Result entries reference the original capture, final score observation, source snapshots and previous result hash. Identity, scheduled start and final state are checked; timing conflicts require review. Corrections append a successor without changing the forecast. First-forecast and paired-model/market statistics are computed separately within each policy cohort. A score check is a research outcome observation, not a bookmaker settlement.
+
+## Manual availability observations
+
+`injury_review` entries record game identity, official source URL, user-reported publication time, server-assigned observation time, review state, typed player/team/status/reason rows and a short note. Validation restricts source hosts/paths, teams, statuses, lengths and time. They append under the capture lock; no record is overwritten. Later review observations cannot retroactively become forecast inputs. More than six hours since publication is stale. Missing/incomplete/not-submitted/unresolved participation never qualifies a selection, and no fitted injury-impact adjustment is claimed. The source is a manual observation, not API-verified.

@@ -1,6 +1,6 @@
 # Model and data upgrade decision brief — October 26, 2026
 
-Status: proposed research roadmap. No new model was fitted, no policy was changed, and no subscription or paid request was authorized. Existing baseline-001 and forward records remain preserved. The user reports no bets recorded for the October 25 slate; do not infer actual betting activity or personal returns from that statement.
+Original brief status at preparation: proposed research roadmap; no model/policy change was made by that brief. Update after subsequent user authorization: the seven free improvements are now implemented as candidate-002 and separate forward-003 paper research; see [preregistration](CANDIDATE_002.md), [complete development results](CANDIDATE_002_RESULTS.md), and [manual data limits](MANUAL_DATA.md). No subscription or paid request was authorized. Existing baseline-001 and forward records remain preserved. The user reports no bets recorded for the October 25 slate; do not infer actual betting activity or personal returns from that statement.
 
 ## Current evidence and observed limitations
 

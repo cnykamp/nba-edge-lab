@@ -1,5 +1,14 @@
 # Version history
 
+## 0.5.0 — 2026-10-26
+
+- Preregistered three fixed recency/context variants and two chronological fitting/calibration/evaluation splits before fitting, with no tuning repeats or final-test performance evaluation. Preserved original model/implementation hashes.
+- Added prior-date observed-final forward state, offseason/recency weighting, back-to-backs, four/seven-day congestion and opponent-adjusted margins. Added contributing-game, season-mix and source-time audit displays.
+- Added a converged penalized Newton fit, past-only Platt calibration, empirical margin prediction intervals, cover/push/loss probabilities, synthetic-line scoring and interval-coverage diagnostics. Logged both improvements and earlier-period calibration/coverage failures.
+- Added a separate forward-003 candidate paper cohort, same-cutoff baseline shadow, preserved original cohorts and future review gates. No qualified best bet or shortlist, automatic retraining or promotion.
+- Added validated append-only manual official-report observations, stale/incomplete/unresolved states and no invented injury-impact adjustment. No automated statistics scraping or paid services.
+- Added causal, numerical, calibration-split, distribution, cohort/integrity and manual-review HTTP tests.
+
 ## 0.4.0 — 2026-10-25
 
 - Added manual daily capture and score-check actions to the responsive dashboard, with CLI equivalents and bounded free-provider requests.

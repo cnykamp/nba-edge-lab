@@ -1,6 +1,6 @@
 # Evaluation contract
 
-This contract began in v0.1. The first registered development experiment is now fitted: see [the frozen specification](BASELINE_001.md) and [all reported baseline results](BASELINE_RESULTS.md). The final performance test remains unevaluated. No forecast interval, qualified selection policy, historical market-price comparison, or profitable strategy has been established. Record trial budgets and acceptance criteria before each experiment; do not select them by looking at final test results.
+This contract began in v0.1. The first registered development experiment is now fitted: see [the frozen specification](BASELINE_001.md) and [all reported baseline results](BASELINE_RESULTS.md). The final performance test remains unevaluated. Candidate-002 now implements research-only empirical margin prediction intervals and reports their development coverage; no win-probability confidence interval, qualified selection policy, historical market-price comparison, or profitable strategy has been established. See [all candidate results](CANDIDATE_002_RESULTS.md). Record trial budgets and acceptance criteria before each experiment; do not select them by looking at final test results.
 
 ## Target and evidence
 
