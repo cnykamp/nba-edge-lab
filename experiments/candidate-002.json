@@ -1,0 +1,119 @@
+{
+  "id": "candidate-002",
+  "status": "preregistered research candidate; no promotion",
+  "primaryVariant": "context-fast",
+  "trialBudget": {
+    "variants": 3,
+    "chronologicalFolds": 2,
+    "candidateFits": 6,
+    "calibratorFits": 6,
+    "repeats": 0
+  },
+  "variants": [
+    {
+      "id": "recency-only",
+      "halfLifeGames": 10,
+      "priorSeasonWeight": 0.25,
+      "context": false
+    },
+    {
+      "id": "context-fast",
+      "halfLifeGames": 10,
+      "priorSeasonWeight": 0.25,
+      "context": true
+    },
+    {
+      "id": "context-slow",
+      "halfLifeGames": 20,
+      "priorSeasonWeight": 0.5,
+      "context": true
+    }
+  ],
+  "folds": [
+    {
+      "train": [
+        2021
+      ],
+      "calibrate": [
+        2022
+      ],
+      "evaluate": [
+        2023
+      ]
+    },
+    {
+      "train": [
+        2021,
+        2022
+      ],
+      "calibrate": [
+        2023
+      ],
+      "evaluate": [
+        2024
+      ]
+    }
+  ],
+  "sealedTestSeasons": [
+    2025
+  ],
+  "features": [
+    "intercept",
+    "elo_diff_div400",
+    "weighted_margin_diff_div10",
+    "rest_diff_div7",
+    "back_to_back_diff",
+    "games_4_days_diff_div4",
+    "games_7_days_diff_div7",
+    "opponent_adjusted_margin_diff_div10"
+  ],
+  "minimumPastResultsPerTeam": 10,
+  "recentWindow": 20,
+  "historicalLagDays": 3,
+  "elo": {
+    "initial": 1500,
+    "k": 20,
+    "homeAdvantage": 60,
+    "offseasonCarry": 0.5
+  },
+  "logistic": {
+    "l2MeanPenalty": 0.01,
+    "maxIterations": 100,
+    "gradientTolerance": 1e-08
+  },
+  "calibration": {
+    "method": "Platt logistic intercept and slope on preceding season predictions only",
+    "l2MeanPenalty": 0.001,
+    "maxIterations": 100,
+    "gradientTolerance": 1e-08
+  },
+  "marginRidge": {
+    "l2MeanPenalty": 0.01
+  },
+  "distribution": {
+    "method": "Equal-weight empirical prior calibration-season margin residuals; round simulated home margin to integer, omit impossible zero final margins and renormalize",
+    "intervalMass": 0.8,
+    "lineGrid": [
+      -10,
+      -5,
+      -3,
+      -2.5,
+      0,
+      2.5,
+      3,
+      5,
+      10
+    ],
+    "limitations": "Marginal interval coverage only; no conditional, per-game probability confidence or staking claim; spread lines are synthetic diagnostic grid, not historical sportsbook prices"
+  },
+  "historicalAvailability": "Three-calendar-day approximation; historical publication and correction times unverified",
+  "forwardAvailability": "Only prior-date final results with source observedAt <= cutoff; current-date scores excluded. Historical seeds must have been collected before cutoff; their availability is not backdated.",
+  "comparison": "Report every variant/fold and raw/calibrated probabilities; include Elo and the original baseline on the identical game subset. Primary fixed in advance, never selected from these results.",
+  "qualification": {
+    "recommendationsEnabled": false,
+    "automaticRetraining": false,
+    "automaticPromotion": false,
+    "review": "First review only after at least 200 new primary candidate forecasts settled over at least 60 distinct Eastern dates. No interim tuning. Compare paired log loss/Brier with original baseline and same-cutoff market, calibration by bucket, date-block uncertainty, 80% interval coverage and selected-policy evidence. These are review eligibility thresholds, not automatic approval; no selected policy is qualified in this version."
+  },
+  "dataPolicy": "2025 outcomes may seed future state but no 2025 prediction/performance metrics may be computed by the experiment runner; Oct25 2026 already inspected and is development evidence."
+}

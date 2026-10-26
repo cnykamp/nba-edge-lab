@@ -1,0 +1,36 @@
+{
+  "id": "forward-003",
+  "version": 3,
+  "mode": "manual paper research; no betting qualification",
+  "modelId": "candidate-002",
+  "timezone": "America/Detroit",
+  "season": 2026,
+  "regularSeason": {
+    "start": "2026-10-20",
+    "end": "2027-04-11",
+    "cupFinalDate": "2026-12-11",
+    "source": "https://pr.nba.com/2026-27-nba-regular-season-schedule"
+  },
+  "maxGamePages": 15,
+  "minimumGameRequestIntervalMs": 13100,
+  "maxSnapshotAgeSeconds": 300,
+  "maxSourceQuoteAgeSeconds": 1800,
+  "maxEventStartDifferenceSeconds": 900,
+  "teamAliases": {
+    "LA Clippers": "Los Angeles Clippers"
+  },
+  "ordering": "Scheduled start, then provider game ID; no edge-based ranking",
+  "marketProbability": "Within-book proportional normalization of two same-event moneyline implied probabilities; no cross-book synthetic pairs",
+  "primaryForecast": "First successfully saved forecast per game under this policy. Keep policy cohorts separate; earlier policy captures remain in the ledger.",
+  "evaluation": "All primary forecasts with verified final scores; paired model vs mean available within-book no-vig probabilities on the same eligible subset; no ROI or selected-bet claims",
+  "retrieval": "Fresh current-season game pages from season start through tomorrow, exhausted within bound. Fresh odds only for capture, never for result checking. Failed or empty captures are recorded.",
+  "features": "Only prior-date final results with source observedAt <= cutoff; current-date scores excluded. Historical seeds must have been collected before cutoff; their availability is not backdated.",
+  "exclusions": "Only scheduled regular-season games at least 15 minutes in the future on the capture's Eastern date; exclude Cup final, postponed, unknown status, ambiguous matches, already-started games, unsupported teams and insufficient or unresolved history.",
+  "settlement": "Append-only score observations for captured 2026 games. Validate provider ID, team identity, scheduled start and final state; corrections append a successor record. No sportsbook settlement or returns.",
+  "recommendationsEnabled": false,
+  "uncertaintyIntervals": "Research-only empirical 80% margin prediction interval; integer spread cover/push distribution",
+  "automaticRetraining": false,
+  "minimumLeadSeconds": 900,
+  "amends": "Separate prospective candidate cohort; forward-001/002 and baseline-001 remain unchanged",
+  "comparison": "Original baseline beside candidate on each fresh input cutoff; no recommendations"
+}
